@@ -44,7 +44,7 @@ class ResponsavelAdmin(admin.ModelAdmin):
 
 @admin.register(Crianca)
 class CriancaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'data_de_nascimento', 'rua', 'numero',
+    list_display = ('nome','qual_sala', 'data_de_nascimento', 'rua', 'numero',
                     'cidade', 'cep', 'mora_com_quem', 'tem_irmaos', 'problema_saude_qual', 
                     'medicamento_continuo', 'mendicamento_qual', 'tem_alergias', 
                     'alergias_qual', 'responsavel')  

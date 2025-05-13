@@ -25,14 +25,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-     'jazzmin',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home'
+    'home',
+    'mensagem',
+
+    
 ]
 
 MIDDLEWARE = [
@@ -234,6 +237,7 @@ JAZZMIN_SETTINGS = {
         'home.Cuidador': 'fa-solid fa-user-tie',
         'home.Registro_Diario': 'fa-solid fa-calendar-days',
         'home.Responsavel': 'fa-duotone fa-solid fa-people-roof',
+        'mensagem.Mensagem': 'fa-solid fa-message'
     },
     # # Icons that are used when one is not manually specified
     # "default_icon_parents": "fas fa-chevron-circle-right",

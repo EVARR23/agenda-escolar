@@ -41,9 +41,15 @@ class Crianca(models.Model):
         ("Pais","Pais"),
         ("Outros", "Outros"),
     ]
+
+    SALA1_OU_SALA2 = [
+        ("sala 1", "sala 1"),
+        ("sala 2", "sala 2"),
+    ]
     
     nome = models.CharField(max_length=100)
     data_de_nascimento = models.DateField()
+    qual_sala = models.CharField(max_length=100, choices=SALA1_OU_SALA2, verbose_name="Qual e a sala?")
     rua = models.CharField(max_length=200)
     numero = models.IntegerField(verbose_name="Número")
     cidade = models.CharField(max_length=100)
