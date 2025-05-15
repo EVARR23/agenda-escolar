@@ -109,7 +109,7 @@ class Registro_Diario(models.Model):
     banho = models.CharField(max_length=100, choices=SIM_OU_NAO)
     sono = models.CharField(max_length=100, choices=TRANQUILO_OU_AGITADO_NAODORMIU)
     observacoes = models.TextField(max_length=100,verbose_name = "observações")
-    assinatura = models.CharField(max_length=100)
+   
 
     class Meta:
         verbose_name = "Registro Diário"

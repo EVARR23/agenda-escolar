@@ -58,7 +58,7 @@ class Registro_DiarioAdmin(admin.ModelAdmin):
     list_display = ('crianca', 'cuidador', 'data',
                     'cafe_da_manha', 'almoco', 'colacao', 'jantar',
                     'evacuacao_liquida', 'evacuacao_pastosa', 'banho',
-                    'sono', 'observacoes', 'assinatura')  
+                    'sono', 'observacoes',)  
     search_fields = ('crianca',)
     list_filter = ('cuidador',)
     actions = [exportar_modelo_csv]
