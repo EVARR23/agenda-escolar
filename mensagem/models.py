@@ -1,20 +1,21 @@
 from django.db import models
-from django.contrib.auth.models import User
-# from .models import Crianca  # Descomente isso se tiver o modelo Crianca
 
 class Mensagem(models.Model):
-    COMUNICACAO_OU_EVENTO_OU_OBSERVACAO_OU_PEDAGOGICOS = [
-        ("comunicação", "Comunicação"),
-        ("evento","Evento"),
-        ("observação","Observação"),
-        ("pedagogicos","Pedagogicos"),
+    TIPOS_MENSAGEM = [
+        ("comunicacao", "Comunicação"),
+        ("evento", "Evento"),
+        ("observacao", "Observação"),
+        ("pedagogicos", "Pedagógicos"),
     ]
 
-    tipo = models.CharField(max_length=255, choices=COMUNICACAO_OU_EVENTO_OU_OBSERVACAO_OU_PEDAGOGICOS,  verbose_name="Tipo")
-    descricao = models.TextField(max_length=100,verbose_name = "Descrições")
+    tipo = models.CharField(max_length=20, choices=TIPOS_MENSAGEM, verbose_name="Tipo")
+    descricao = models.TextField(verbose_name="Descrição")
+    imagem = models.ImageField(upload_to="images/user")
+
     class Meta:
         verbose_name = "Mensagem"
         verbose_name_plural = "Mensagens"
 
     def __str__(self):
         return self.tipo
+
