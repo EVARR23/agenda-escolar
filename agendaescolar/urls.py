@@ -6,7 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', admin.site.urls),
+    path('agenda', admin.site.urls),
     path('home/', views.home)
   
 ]

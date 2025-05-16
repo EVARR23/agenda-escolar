@@ -11,6 +11,7 @@ class Mensagem(models.Model):
     tipo = models.CharField(max_length=20, choices=TIPOS_MENSAGEM, verbose_name="Tipo")
     descricao = models.TextField(verbose_name="Descrição")
     imagem = models.ImageField(upload_to="images/user")
+    crianca = models.ForeignKey('home.Crianca', on_delete=models.CASCADE, related_name='mensagem', verbose_name="criança")
 
     class Meta:
         verbose_name = "Mensagem"
