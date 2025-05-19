@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+
 
 class Cuidador(models.Model):
     nome = models.CharField(max_length=200)
@@ -18,7 +20,12 @@ class Responsavel(models.Model):
     telefone = models.CharField(max_length=15)
     profissao = models.CharField(max_length=200, verbose_name="Profissão")
     local_trabalho = models.CharField(max_length=100, null=True, blank=True)
-
+    auth_user = models.ForeignKey(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.CASCADE,
+    related_name='responsaveis',
+    verbose_name="Usuário"
+    )
     class Meta:
         verbose_name = "Responsável"
         verbose_name_plural = "Responsáveis"
@@ -104,11 +111,11 @@ class Registro_Diario(models.Model):
     alm = models.CharField(max_length=100, null=True, blank=True, verbose_name="Almoço", choices=NADA_OU_POUCO_OU_TUDO)
     col = models.CharField(max_length=100, verbose_name = "Colação", choices=NADA_OU_POUCO_OU_TUDO)
     jnt = models.CharField(max_length=100, verbose_name = "Janta", choices=NADA_OU_POUCO_OU_TUDO)
-    ev_L = models.CharField(max_length=100, choices=ANO_CHOICES, verbose_name="Ev.Liquida")
-    ev_P = models.CharField(max_length=100, choices=ANO_CHOICES, verbose_name="Ev.Pastosa")
+    ev_L = models.CharField(max_length=1, choices=ANO_CHOICES, verbose_name="Ev.Liquida")
+    ev_P = models.CharField(max_length=1, choices=ANO_CHOICES, verbose_name="Ev.Pastosa")
     bnh = models.CharField(max_length=100, verbose_name = "Banho", choices=SIM_OU_NAO)
     sono = models.CharField(max_length=100, choices=TRANQUILO_OU_AGITADO_NAODORMIU)
-    obs = models.TextField(max_length=10,verbose_name = "observações")
+    obs = models.TextField(max_length=25,verbose_name = "observações")
    
 
     class Meta:

@@ -137,7 +137,7 @@ class CuidadorAdmin(admin.ModelAdmin):
 
 @admin.register(Responsavel)
 class ResponsavelAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'telefone', 'profissao', 'local_trabalho')
+    list_display = ('nome', 'telefone', 'profissao', 'local_trabalho', 'auth_user')
     search_fields = ('nome',)
     list_filter = ('telefone',)
     actions = [exportar_modelo_pdf]
