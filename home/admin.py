@@ -46,7 +46,7 @@ class FilterLoginGroup(SimpleListFilter):
         grupos = usuario.groups.all()
         existe = usuario.groups.filter(name__icontains='Responsaveis').exists()  
         if existe :
-            return [(c.id, c.nome) for c in Crianca.objects.filter(responsavel__auth_user_id=user_id)[0:1]]
+            return [(c.id, c.nome) for c in Crianca.objects.filter(responsaveis__auth_user_id=user_id)[0:1]]
         else:
             return [(c.id, c.nome) for c in Crianca.objects.all()]  
 
@@ -56,8 +56,10 @@ class FilterLoginGroup(SimpleListFilter):
             user_id = usuario.pk
             grupos = usuario.groups.all()
             existe = usuario.groups.filter(name__icontains='Responsaveis').exists()  
+            responsaveis_ids = [1, 2, 3, 23]
             if existe :
-                return queryset.filter(crianca__responsavel__auth_user_id=user_id)
+                return queryset.filter(crianca__responsaveis__auth_user_id=user_id)
+                #return queryset.filter(crianca__id=21)
             else: 
                 return queryset.filter(crianca__id=self.value())
         return queryset    
@@ -177,7 +179,7 @@ class ResponsavelAdmin(admin.ModelAdmin):
 
 @admin.register(Crianca)
 class CriancaAdmin(admin.ModelAdmin):
-    list_display = ('responsavel', 'nome', 'qual_sala', 'data_de_nascimento', 'rua', 'num',
+    list_display = ('nome', 'qual_sala', 'data_de_nascimento', 'rua', 'num',
                     'cidade', 'cep', 'mora_com_quem', 'tem_irmaos', 'prob_saude',
                     'medic_continuo', 'medic_qual', 'tem_alergias',
                     'aler_qual')
@@ -190,7 +192,7 @@ class Registro_DiarioAdmin(admin.ModelAdmin):
     list_display = ('crianca', 'cuidador', 'data',
                     'cafe', 'alm', 'col', 'jnt',
                     'ev_L', 'ev_P', 'bnh',
-                    'sono', 'obs',)
+                    'sono', 'obs')
     list_filter = (FilterLoginGroup, MesFiltro)
     
     def changelist_view(self, request, extra_context=None):
@@ -210,7 +212,7 @@ class Registro_DiarioAdmin(admin.ModelAdmin):
             print(f"Existe: {existe}")
 
             if existe :
-                self.get_queryset = lambda request: self.model.objects.filter(crianca__responsavel__auth_user_id=user_id)
+                self.get_queryset = lambda request: self.model.objects.filter(crianca__responsaveis__auth_user_id=user_id)
             else:
                 self.get_queryset = lambda request: self.model.objects.all()
             

@@ -65,7 +65,6 @@ class Crianca(models.Model):
         ("sala 2", "sala 2"),
     ]
     
-    responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='criancas', verbose_name="responsável")
     nome = models.CharField(max_length=100)
     data_de_nascimento = models.DateField()
     qual_sala = models.CharField(max_length=100, choices=SALA1_OU_SALA2, verbose_name="qual_sala?")
@@ -80,7 +79,7 @@ class Crianca(models.Model):
     medic_qual = models.CharField(max_length=200,verbose_name="Medic qual?")
     tem_alergias = models.CharField(max_length=200,  choices=SIM_OU_NAO,verbose_name="tem_alergias?")
     aler_qual = models.CharField(max_length=200, verbose_name="aler_qual?")
-   
+    responsaveis = models.ManyToManyField(Responsavel, blank=True)  # Relacionamento M:N
 
 
     class Meta:
