@@ -16,7 +16,7 @@
     <canvas id="lineChart" width="600" height="300"></canvas>
 
     <script>
-        fetch("{% url 'line_chart_json' %}")
+        fetch("http://cd726145-c3e4-4ca3-8067-db7a292c2a71.mock.pstmn.io/agenda")
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('lineChart').getContext('2d');

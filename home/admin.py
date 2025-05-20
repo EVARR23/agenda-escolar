@@ -12,7 +12,8 @@ import os
 import locale
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.styles import ParagraphStyle
-from .models import Cuidador, Responsavel, Crianca, Registro_Diario
+from .models import Sala, Cuidador, Responsavel, Crianca, Registro_Diario
+
 
 # --- Define locale para datas em português ---
 try:
@@ -33,6 +34,33 @@ class MesFiltro(SimpleListFilter):
         if self.value():
             ano, mes = self.value().split("-")
             return queryset.filter(data__year=ano, data__month=mes)
+
+class FilterLoginGroup(SimpleListFilter):
+    title = 'Criança'
+    parameter_name = 'crianca'
+
+    def lookups(self, request, model_admin):
+        from .models import Crianca  # Ajuste se estiver em outro app
+        usuario = request.user
+        user_id = usuario.pk
+        grupos = usuario.groups.all()
+        existe = usuario.groups.filter(name__icontains='Responsaveis').exists()  
+        if existe :
+            return [(c.id, c.nome) for c in Crianca.objects.filter(responsavel__auth_user_id=user_id)[0:1]]
+        else:
+            return [(c.id, c.nome) for c in Crianca.objects.all()]  
+
+    def queryset(self, request, queryset):
+        if self.value():
+            usuario = request.user
+            user_id = usuario.pk
+            grupos = usuario.groups.all()
+            existe = usuario.groups.filter(name__icontains='Responsaveis').exists()  
+            if existe :
+                return queryset.filter(crianca__responsavel__auth_user_id=user_id)
+            else: 
+                return queryset.filter(crianca__id=self.value())
+        return queryset    
 
 # --- Função para rodapé com data e nome do usuário ---
 def rodape(canvas, doc):
@@ -128,6 +156,11 @@ def exportar_modelo_pdf(modeladmin, request, queryset):
 exportar_modelo_pdf.short_description = "Exportar como PDF"
 
 # --- Admins ---
+# @admin.register(Sala)
+# class SalaAdmin(admin.ModelAdmin):
+#     list_display = ('nome')
+
+
 @admin.register(Cuidador)
 class CuidadorAdmin(admin.ModelAdmin):
     list_display = ('nome', 'telefone', 'profissao')
@@ -144,12 +177,12 @@ class ResponsavelAdmin(admin.ModelAdmin):
 
 @admin.register(Crianca)
 class CriancaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'qual_sala', 'data_de_nascimento', 'rua', 'num',
+    list_display = ('responsavel', 'nome', 'qual_sala', 'data_de_nascimento', 'rua', 'num',
                     'cidade', 'cep', 'mora_com_quem', 'tem_irmaos', 'prob_saude',
                     'medic_continuo', 'medic_qual', 'tem_alergias',
-                    'aler_qual', 'responsavel')
+                    'aler_qual')
     search_fields = ('nome',)
-    list_filter = ('data_de_nascimento',)
+    list_filter = ('nome', 'data_de_nascimento')
     actions = [exportar_modelo_pdf]
 
 @admin.register(Registro_Diario)
@@ -158,6 +191,30 @@ class Registro_DiarioAdmin(admin.ModelAdmin):
                     'cafe', 'alm', 'col', 'jnt',
                     'ev_L', 'ev_P', 'bnh',
                     'sono', 'obs',)
-    search_fields = ('crianca__nome',)
-    list_filter = ('crianca', MesFiltro)
+    list_filter = (FilterLoginGroup, MesFiltro)
+    
+    def changelist_view(self, request, extra_context=None):
+        # Verifica se há parâmetros de filtro ou busca
+        if not request.GET:
+            self.message_user(request, "Utilize ao menos um dos filtros para exibir os resultados.", level="info")
+            # Substitui o queryset por um vazio
+            self.get_queryset = lambda request: self.model.objects.none()
+        else:
+            usuario = request.user
+            user_id = usuario.pk
+            grupos = usuario.groups.all()
+            for grupo in grupos:
+                print(f"Grupo: {grupo.name}")
+
+            existe = usuario.groups.filter(name__icontains='Responsaveis').exists()  
+            print(f"Existe: {existe}")
+
+            if existe :
+                self.get_queryset = lambda request: self.model.objects.filter(crianca__responsavel__auth_user_id=user_id)
+            else:
+                self.get_queryset = lambda request: self.model.objects.all()
+            
+        return super().changelist_view(request, extra_context=extra_context)
     actions = [exportar_modelo_pdf]
+    
+    

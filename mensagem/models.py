@@ -8,10 +8,17 @@ class Mensagem(models.Model):
         ("pedagogicos", "Pedagógicos"),
     ]
 
+    SALA1_OU_SALA2 = [
+        ("sala 1", "sala 1"),
+        ("sala 2", "sala 2"),
+    ]
+
     tipo = models.CharField(max_length=20, choices=TIPOS_MENSAGEM, verbose_name="Tipo")
     descricao = models.TextField(verbose_name="Descrição")
     imagem = models.ImageField(upload_to="images/user")
-    crianca = models.ForeignKey('home.Crianca', on_delete=models.CASCADE, related_name='mensagem', verbose_name="criança")
+
+    salas = models.ManyToManyField('home.Sala', blank=True)  # Relacionamento M:N
+    criancas = models.ManyToManyField('home.Crianca', blank=True)  # Relacionamento M:N
 
     class Meta:
         verbose_name = "Mensagem"

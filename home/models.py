@@ -2,6 +2,17 @@ from django.db import models
 from django.conf import settings
 
 
+class Sala(models.Model):
+    nome = models.CharField(max_length=200)
+    
+    class Meta:
+        verbose_name = "Sala"
+        verbose_name_plural = "Salas"
+
+    def __str__(self):
+        return self.nome
+
+
 class Cuidador(models.Model):
     nome = models.CharField(max_length=200)
     telefone = models.CharField(max_length=15, verbose_name="Telefone")
@@ -54,6 +65,7 @@ class Crianca(models.Model):
         ("sala 2", "sala 2"),
     ]
     
+    responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='criancas', verbose_name="responsável")
     nome = models.CharField(max_length=100)
     data_de_nascimento = models.DateField()
     qual_sala = models.CharField(max_length=100, choices=SALA1_OU_SALA2, verbose_name="qual_sala?")
@@ -68,7 +80,7 @@ class Crianca(models.Model):
     medic_qual = models.CharField(max_length=200,verbose_name="Medic qual?")
     tem_alergias = models.CharField(max_length=200,  choices=SIM_OU_NAO,verbose_name="tem_alergias?")
     aler_qual = models.CharField(max_length=200, verbose_name="aler_qual?")
-    responsavel = models.ForeignKey('Responsavel', on_delete=models.CASCADE, related_name='criancas', verbose_name="responsável")
+   
 
 
     class Meta:
@@ -115,13 +127,13 @@ class Registro_Diario(models.Model):
     ev_P = models.CharField(max_length=1, choices=ANO_CHOICES, verbose_name="Ev.Pastosa")
     bnh = models.CharField(max_length=100, verbose_name = "Banho", choices=SIM_OU_NAO)
     sono = models.CharField(max_length=100, choices=TRANQUILO_OU_AGITADO_NAODORMIU)
-    obs = models.TextField(max_length=25,verbose_name = "observações")
-   
+    obs = models.TextField(max_length=25,verbose_name = "observações")   
 
     class Meta:
         verbose_name = "Registro Diário"
         verbose_name_plural = "Registro Diário"
-
     def __str__(self):
         return f"Registro de {self.crianca.nome} em {self.data}"
+
+
 
