@@ -144,10 +144,10 @@ class ResponsavelAdmin(admin.ModelAdmin):
 
 @admin.register(Crianca)
 class CriancaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'sal', 'data_de_nascimento', 'rua', 'num',
-                    'cidade', 'cep', 'mora_com_quem', 'tem_irmaos', 'prob_saude',
-                    'medic_continuo', 'medic_qual', 'tem_alergias',
-                    'aler_qual', 'responsavel')
+    list_display = ('nome', 'sal', 'data_de_nascimento', 'ru', 'num',
+                    'cid', 'cep', 'mor_q', 'irm', 'pr_sau',
+                    'med', 'med_q', 'aler',
+                    'aler_q', 'resp')
     search_fields = ('nome',)
     list_filter = ('data_de_nascimento',)
     actions = [exportar_modelo_pdf]
