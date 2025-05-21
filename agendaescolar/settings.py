@@ -19,7 +19,7 @@ SECRET_KEY = 'django-insecure-&d&cylru%@&_^$_iat5mg87*@cc+e5435@tq*45qvp1t_qcj%s
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -248,7 +248,8 @@ JAZZMIN_SETTINGS = {
         'home.Cuidador': 'fa-solid fa-user-tie',
         'home.Registro_Diario': 'fa-solid fa-calendar-days',
         'home.Responsavel': 'fa-duotone fa-solid fa-people-roof',
-        'mensagem.Mensagem': 'fa-solid fa-message'
+        'mensagem.Mensagem': 'fa-solid fa-message',
+        'home.Sala' : 'fa-solid fa-school'
     },
     # # Icons that are used when one is not manually specified
     # "default_icon_parents": "fas fa-chevron-circle-right",

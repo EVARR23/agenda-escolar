@@ -67,7 +67,7 @@ class Crianca(models.Model):
     
     nome = models.CharField(max_length=100)
     data_de_nascimento = models.DateField()
-    qual_sala = models.CharField(max_length=100, choices=SALA1_OU_SALA2, verbose_name="qual_sala?")
+    sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
     rua = models.CharField(max_length=200)
     num = models.IntegerField(verbose_name="Num")
     cidade = models.CharField(max_length=100)

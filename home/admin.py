@@ -157,10 +157,9 @@ def exportar_modelo_pdf(modeladmin, request, queryset):
 
 exportar_modelo_pdf.short_description = "Exportar como PDF"
 
-# --- Admins ---
-# @admin.register(Sala)
-# class SalaAdmin(admin.ModelAdmin):
-#     list_display = ('nome')
+@admin.register(Sala)
+class SalaAdmin(admin.ModelAdmin):
+    list_display = ('nome',)
 
 
 @admin.register(Cuidador)
@@ -179,13 +178,20 @@ class ResponsavelAdmin(admin.ModelAdmin):
 
 @admin.register(Crianca)
 class CriancaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'qual_sala', 'data_de_nascimento', 'rua', 'num',
+    list_display = ('nome', 'sala', 'data_de_nascimento', 'rua', 'num',
                     'cidade', 'cep', 'mora_com_quem', 'tem_irmaos', 'prob_saude',
                     'medic_continuo', 'medic_qual', 'tem_alergias',
                     'aler_qual')
     search_fields = ('nome',)
     list_filter = ('nome', 'data_de_nascimento')
     actions = [exportar_modelo_pdf]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+            field = super().formfield_for_foreignkey(db_field, request, **kwargs)
+            print("DEBUG: Tipo do widget:", type(field.widget))
+            field.widget.can_add_related = False  # Remove o botão de "adicionar"
+            field.widget.can_change_related = False  # Remove o botão de "editar"
+            return field
 
 @admin.register(Registro_Diario)
 class Registro_DiarioAdmin(admin.ModelAdmin):
