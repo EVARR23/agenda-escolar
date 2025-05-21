@@ -134,6 +134,7 @@ class CuidadorAdmin(admin.ModelAdmin):
     search_fields = ('nome',)
     list_filter = ('telefone',)
     actions = [exportar_modelo_pdf]
+    
 
 @admin.register(Responsavel)
 class ResponsavelAdmin(admin.ModelAdmin):
@@ -141,6 +142,7 @@ class ResponsavelAdmin(admin.ModelAdmin):
     search_fields = ('nome',)
     list_filter = ('telefone',)
     actions = [exportar_modelo_pdf]
+    
 
 @admin.register(Crianca)
 class CriancaAdmin(admin.ModelAdmin):
