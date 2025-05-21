@@ -2,6 +2,43 @@ from django.db import models
 from django.conf import settings
 
 
+SELECIONE = [('selecione', 'Selecione')]
+
+SELECIONE_SIM_NAO = SELECIONE + [
+    ('sim', 'Sim'),
+    ('não', 'Não'),
+]
+
+SELECIONE_AVOS_PAIS_OUTROS = SELECIONE + [
+    ("avós", "Avós"),
+    ("Pais", "Pais"),
+    ("Outros", "Outros"),
+]
+
+SELECIONE_SALA = SELECIONE + [
+    ("sala 1", "Sala 1"),
+    ("sala 2", "Sala 2"),
+]
+
+SELECIONE_NADA_POUCO_TUDO = SELECIONE + [
+    ('nada', 'Nada'),
+    ('pouco', 'Pouco'),
+    ('tudo', 'Tudo'),
+]
+
+SELECIONE_ANO = SELECIONE + [
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+]
+
+SELECIONE_TRANQUILO_AGITADO_NAODORMIU = SELECIONE + [
+    ("tranquilo", "Tranquilo"),
+    ("agitado", "Agitado"),
+    ("não dormiu", "Não dormiu"),
+]
+
+
 class Cuidador(models.Model):
     nome = models.CharField(max_length=200)
     telefone = models.CharField(max_length=15, verbose_name="Telefone")
@@ -38,30 +75,14 @@ class Responsavel(models.Model):
 
 
 class Crianca(models.Model):
-    SIM_OU_NAO_OU_SELECIONE = [
-        ('selecione', 'Selecione'),
-        ('sim', 'Sim'),
-        ('não', 'Não'),
-    ]
-
-    AVOS_OU_PAIS_OU_TIOS = [
-        ("avós", "Avós"),
-        ("Pais", "Pais"),
-        ("Outros", "Outros"),
-    ]
-
-    SALA1_OU_SALA2 = [
-        ("sala 1", "Sala 1"),
-        ("sala 2", "Sala 2"),
-    ]
 
     nome = models.CharField(max_length=100)
     data_de_nascimento = models.DateField()
     sal = models.CharField(
         max_length=100,
-        choices=SALA1_OU_SALA2,
+        choices=SELECIONE_SALA,
         verbose_name="Qual sala?",
-        default="sala 1",
+        default="selecione",
         blank=False
     )
     ru = models.CharField(max_length=200)
@@ -70,38 +91,38 @@ class Crianca(models.Model):
     cep = models.CharField(max_length=200)
     mor_q = models.CharField(
         max_length=200,
-        choices=AVOS_OU_PAIS_OU_TIOS,
+        choices=SELECIONE_AVOS_PAIS_OUTROS,
         verbose_name="Mora com quem?",
-        default="Pais",
+        default="selecione",
         blank=False
     )
     irm = models.CharField(
-        max_length=9,  # Corrigido para comportar 'selecione'
-        choices=SIM_OU_NAO_OU_SELECIONE,
+        max_length=9,
+        choices=SELECIONE_SIM_NAO,
         verbose_name="Tem irmãos?",
-        default="não",
+        default="selecione",
         blank=False
     )
     pr_sau = models.CharField(
         max_length=200,
-        choices=SIM_OU_NAO_OU_SELECIONE,
+        choices=SELECIONE_SIM_NAO,
         verbose_name="Prob. saúde",
-        default="não",
+        default="selecione",
         blank=False
     )
     med = models.CharField(
         max_length=200,
-        choices=SIM_OU_NAO_OU_SELECIONE,
+        choices=SELECIONE_SIM_NAO,
         verbose_name="Medic. contínuo?",
-        default="não",
+        default="selecione",
         blank=False
     )
     med_q = models.CharField(max_length=50, verbose_name="Medic qual?")
     aler = models.CharField(
         max_length=200,
-        choices=SIM_OU_NAO_OU_SELECIONE,
+        choices=SELECIONE_SIM_NAO,
         verbose_name="Tem alergias?",
-        default="não",
+        default="selecione",
         blank=False
     )
     aler_q = models.CharField(max_length=200, verbose_name="Alergias qual?")
@@ -123,28 +144,6 @@ class Crianca(models.Model):
 
 
 class Registro_Diario(models.Model):
-    NADA_OU_POUCO_OU_TUDO = [
-        ('nada', 'Nada'),
-        ('pouco', 'Pouco'),
-        ('tudo', 'Tudo')
-    ]
-
-    ANO_CHOICES = [
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-    ]
-
-    SIM_OU_NAO_OU_SELECIONE = [
-        ('sim', 'Sim'),
-        ('não', 'Não'),
-    ]
-
-    TRANQUILO_OU_AGITADO_NAODORMIU = [
-        ("tranquilo", "Tranquilo"),
-        ("agitado", "Agitado"),
-        ("não dormiu", "Não dormiu"),
-    ]
 
     crianca = models.ForeignKey(
         Crianca,
@@ -167,56 +166,56 @@ class Registro_Diario(models.Model):
     cafe = models.CharField(
         max_length=100,
         verbose_name="Café",
-        choices=NADA_OU_POUCO_OU_TUDO,
-        default='tudo',
+        choices=SELECIONE_NADA_POUCO_TUDO,
+        default='selecione',
         blank=False
     )
     alm = models.CharField(
         max_length=100,
         verbose_name="Almoço",
-        choices=NADA_OU_POUCO_OU_TUDO,
-        default='tudo',
+        choices=SELECIONE_NADA_POUCO_TUDO,
+        default='selecione',
         blank=False
     )
     col = models.CharField(
         max_length=100,
         verbose_name="Colação",
-        choices=NADA_OU_POUCO_OU_TUDO,
-        default='tudo',
+        choices=SELECIONE_NADA_POUCO_TUDO,
+        default='selecione',
         blank=False
     )
     jnt = models.CharField(
         max_length=100,
         verbose_name="Janta",
-        choices=NADA_OU_POUCO_OU_TUDO,
-        default='tudo',
+        choices=SELECIONE_NADA_POUCO_TUDO,
+        default='selecione',
         blank=False
     )
     ev_L = models.CharField(
-        max_length=1,
-        choices=ANO_CHOICES,
-        verbose_name="Ev. Líquida",
-        default='1',
-        blank=False
+    max_length=9,  # mudou de 1 para 9
+    choices=SELECIONE_ANO,
+    verbose_name="Ev. Líquida",
+    default='selecione',
+    blank=False
     )
     ev_P = models.CharField(
-        max_length=1,
-        choices=ANO_CHOICES,
-        verbose_name="Ev. Pastosa",
-        default='1',
-        blank=False
+    max_length=9,  # mudou de 1 para 9
+    choices=SELECIONE_ANO,
+    verbose_name="Ev. Pastosa",
+    default='selecione',
+    blank=False
     )
     bnh = models.CharField(
         max_length=100,
         verbose_name="Banho",
-        choices=SIM_OU_NAO_OU_SELECIONE,
-        default='não',
+        choices=SELECIONE_SIM_NAO,
+        default='selecione',
         blank=False
     )
     sono = models.CharField(
         max_length=100,
-        choices=TRANQUILO_OU_AGITADO_NAODORMIU,
-        default="tranquilo",
+        choices=SELECIONE_TRANQUILO_AGITADO_NAODORMIU,
+        default="selecione",
         blank=False
     )
     obs = models.TextField(

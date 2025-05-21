@@ -1,7 +1,11 @@
 from django.db import models
 
 class Mensagem(models.Model):
-    TIPOS_MENSAGEM = [
+    SELECIONE = [
+        ('selecione', 'Selecione'),
+    ]
+
+    SELECIONE_TIPOS_MENSAGEM = SELECIONE + [
         ("comunicacao", "Comunicação"),
         ("evento", "Evento"),
         ("observacao", "Observação"),
@@ -10,10 +14,10 @@ class Mensagem(models.Model):
 
     tipo = models.CharField(
         max_length=20,
-        choices=TIPOS_MENSAGEM,
+        choices=SELECIONE_TIPOS_MENSAGEM,
         verbose_name="Tipo",
-        default="comunicacao",  # valor padrão
-        blank=False             # impede deixar vazio no admin
+        default="selecione",  # valor padrão
+        blank=False           # impede deixar vazio no admin
     )
     descricao = models.TextField(verbose_name="Descrição")
     imagem = models.ImageField(upload_to="images/user")
@@ -32,4 +36,3 @@ class Mensagem(models.Model):
 
     def __str__(self):
         return f"{self.get_tipo_display()} - {self.crianca}"
-
