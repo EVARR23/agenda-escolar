@@ -94,7 +94,7 @@ def exportar_modelo_pdf(modeladmin, request, queryset):
     elementos = []
 
     # --- Cabeçalho com logo e título centralizado ---
-    caminho_logo = os.path.join(settings.BASE_DIR, 'home', 'static', 'logo.png')
+    caminho_logo = os.path.join(settings.BASE_DIR, 'home', 'static', 'logo-creche.jpeg')
     styles = getSampleStyleSheet()
 
     if os.path.exists(caminho_logo):
@@ -165,15 +165,13 @@ class SalaAdmin(admin.ModelAdmin):
 @admin.register(Cuidador)
 class CuidadorAdmin(admin.ModelAdmin):
     list_display = ('nome', 'telefone', 'profissao')
-    search_fields = ('nome',)
-    list_filter = ('telefone',)
+    list_filter = ('nome',)
     actions = [exportar_modelo_pdf]
 
 @admin.register(Responsavel)
 class ResponsavelAdmin(admin.ModelAdmin):
     list_display = ('nome', 'telefone', 'profissao', 'local_trabalho', 'auth_user')
-    search_fields = ('nome',)
-    list_filter = ('telefone',)
+    list_filter = ('nome',)
     actions = [exportar_modelo_pdf]
 
 @admin.register(Crianca)
@@ -182,9 +180,8 @@ class CriancaAdmin(admin.ModelAdmin):
                     'cidade', 'cep', 'mora_com_quem', 'tem_irmaos', 'prob_saude',
                     'medic_continuo', 'medic_qual', 'tem_alergias',
                     'aler_qual')
-    search_fields = ('nome',)
-    list_filter = ('nome', 'data_de_nascimento')
-    actions = [exportar_modelo_pdf]
+    list_filter = ('nome', )
+    actions = [exportar_modelo_pdf] 
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
             field = super().formfield_for_foreignkey(db_field, request, **kwargs)

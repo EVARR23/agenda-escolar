@@ -143,17 +143,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
-    "site_title": "Agenda Escolar",
+    "site_title": "Conecta Creche",
 
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "Agenda Escolar",
+    "site_header": "Conecta Creche",
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "Agenda Escolar",
+    "site_brand": "Conecta Creche",
 
   
     # # Logo to use for your site, must be present in static files, used for brand on top left
-    # "site_logo": "books/img/logo.png",
+    "site_logo": "logo-creche.jpeg", 
 
     # # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
     # "login_logo": None,
@@ -171,7 +171,7 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Bem-vindo(a) a agenda escolar",
 
     # # Copyright on the footer
-    "copyright": 'Agenda Escolar',
+    "copyright": 'Conecta Creche',
 
     # # List of model admins to search from the search bar, search bar omitted if excluded
     # # If you want to use a single search field you dont need to use a list, you can use a simple string 
@@ -270,7 +270,7 @@ JAZZMIN_SETTINGS = {
     # # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
     # "use_google_fonts_cdn": True,
     # # Whether to show the UI customizer on the sidebar
-    "show_ui_builder": True,
+    "show_ui_builder": False,
 
     ###############
     # Change view #

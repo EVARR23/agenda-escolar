@@ -35,7 +35,9 @@ class Responsavel(models.Model):
     settings.AUTH_USER_MODEL,
     on_delete=models.CASCADE,
     related_name='responsaveis',
-    verbose_name="Usuário"
+    verbose_name="Usuário",
+    null=True,
+    blank=True
     )
     class Meta:
         verbose_name = "Responsável"
@@ -72,7 +74,7 @@ class Crianca(models.Model):
     num = models.IntegerField(verbose_name="Num")
     cidade = models.CharField(max_length=100)
     cep = models.CharField(max_length=200)
-    mora_com_quem = models.CharField(max_length=200,  choices=AVOS_OU_PAIS_OU_TIOS, verbose_name="Mora com quem?")
+    mora_com_quem = models.CharField(max_length=200,  choices=AVOS_OU_PAIS_OU_TIOS, verbose_name="Mora com quem?", blank = False)
     tem_irmaos = models.CharField(max_length=3, choices=SIM_OU_NAO, verbose_name="Tem irmãos?")
     prob_saude = models.CharField(max_length=200, choices=SIM_OU_NAO, verbose_name="prob saúde")
     medic_continuo = models.CharField(max_length=200,  choices=SIM_OU_NAO, verbose_name = "Medic continuo?")

@@ -14,6 +14,7 @@ class Mensagem(models.Model):
     ]
 
     tipo = models.CharField(max_length=20, choices=TIPOS_MENSAGEM, verbose_name="Tipo")
+    data = models.DateField()
     descricao = models.TextField(verbose_name="Descrição")
     imagem = models.ImageField(upload_to="images/user")
 

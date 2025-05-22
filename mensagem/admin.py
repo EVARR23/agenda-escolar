@@ -3,5 +3,5 @@ from .models import Mensagem
 
 @admin.register(Mensagem)
 class MensagemAdmin(admin.ModelAdmin):
-    list_display = ('tipo', 'descricao', 'imagem')
-    search_fields = ('tipo',) 
+    list_display = ('tipo', 'data', 'descricao', 'imagem')
+    list_filter = ('tipo', 'data')
