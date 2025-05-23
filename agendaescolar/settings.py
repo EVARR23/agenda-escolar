@@ -227,7 +227,7 @@ JAZZMIN_SETTINGS = {
     # "hide_models": [],
 
     # # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    # "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+    "order_with_respect_to": [ "home", "home.responsavel", "home.crianca", "home.cuidador", "home.registrodiarios", "mensagem",  "auth.user", "auth.group"],
 
     # # Custom links to append to app groups, keyed on app name
     # "custom_links": {
