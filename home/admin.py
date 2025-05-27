@@ -14,6 +14,10 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.styles import ParagraphStyle
 from .models import Cuidador, Responsavel, Crianca, Registro_Diario
 
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render
+from django.urls import path
+
 # --- Define locale para datas em português ---
 try:
     locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')  # Linux/Mac
@@ -163,3 +167,37 @@ class Registro_DiarioAdmin(admin.ModelAdmin):
     search_fields = ('crianca__nome',)
     list_filter = ('crianca', MesFiltro)
     actions = [exportar_modelo_pdf]
+
+
+@staff_member_required
+def admin_statistics_view(request):
+    return render(request, "admin/statistics.html", {
+        "title": "Statistics"
+    })
+
+
+class CustomAdminSite(admin.AdminSite):
+    def get_app_list(self, request, _=None):
+        app_list = super().get_app_list(request)
+        app_list += [
+            {
+                "name": "My Custom App",
+                "app_label": "my_custom_app",
+                "models": [
+                    {
+                        "name": "Statistics",
+                        "object_name": "statistics",
+                        "admin_url": "/admin/statistics",
+                        "view_only": True,
+                    }
+                ],
+            }
+        ]
+        return app_list
+
+    def get_urls(self):
+        urls = super().get_urls()
+        urls += [
+            path("statistics/", admin_statistics_view, name="admin-statistics"),
+        ]
+        return urls

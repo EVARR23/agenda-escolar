@@ -60,7 +60,7 @@ class Responsavel(models.Model):
     auth_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='responsaveis',
+        related_name='responsaveis_home',
         verbose_name="Usuário",
         default="",
         blank=False
